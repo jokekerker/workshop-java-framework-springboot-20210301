@@ -10,8 +10,6 @@ public class DemoService {
 //        this.random = random;
 //    }
 
-
-
 //    public static void main(String[] args) {
 //
 //    }

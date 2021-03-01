@@ -14,7 +14,7 @@ public class DemoServiceTest {
     public void random_5(){
 
         DemoService demoService = new DemoService();
-        demoService.setRandom(new Random5());
+        demoService.setRandom(new MockRandom(5));
         String actualResult = demoService.generateData("papatpon");
         assertEquals("papatpon5", actualResult);
     }
@@ -23,25 +23,34 @@ public class DemoServiceTest {
     @DisplayName("throw exception runtime is not in range")
     public void random_throw_exception(){
 
-        assertThrows(RuntimeException.class, () -> {
+        RuntimeException expectedException = assertThrows(RuntimeException.class, () -> {
             DemoService demoService = new DemoService();
-            demoService.setRandom(new Random11());
-            String actualResult = demoService.generateData("papatpon");
+            demoService.setRandom(new MockRandom(11));
+            demoService.generateData("papatpon");
         });
 
+        assertEquals("run number 11", expectedException.getMessage());
+
     }
 }
 
-class Random5 extends Random {
+class MockRandom extends Random {
+
+    private final int result;
+
+    MockRandom(int result) {
+        this.result = result;
+    }
+
     @Override
     public int nextInt(int bound) {
-        return 5;
+        return this.result;
     }
 }
 
-class Random11 extends Random {
-    @Override
-    public int nextInt(int bound) {
-        return 11;
-    }
-}
+//class Random11 extends Random {
+//    @Override
+//    public int nextInt(int bound) {
+//        return 11;
+//    }
+//}
